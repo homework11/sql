@@ -194,4 +194,105 @@ public class MenuOpreation {
     		}
     		return list.size()==0?false:true;
     	}
+	 /*
+     * 	查询一条记录
+     */
+	//按id查询
+	public List<Book> Find(String id) throws ClassNotFoundException, SQLException
+	{
+		String sql = "SELECT *FROM  books where id = '"+id+"' ORDER BY books.price ASC;";
+		bd.getConn();
+		bd.st = (Statement) bd.con.createStatement();
+		bd.rs=bd.st.executeQuery(sql);
+		List<Book> list=new ArrayList<Book>();
+		while(bd.rs.next())
+		{
+			Book book= new Book(bd.rs.getString(1),bd.rs.getString(2),bd.rs.getString(3),bd.rs.getDouble(4),bd.rs.getLong(5));
+			list.add(book);
+		}
+		return list;
+	}
+	//按名字查询
+	public List<Book> FindName(String name) throws ClassNotFoundException, SQLException
+	{
+		String sql = "SELECT *FROM  books where name = '"+name+"' ORDER BY books.price ASC;";
+		bd.getConn();
+		bd.st = (Statement) bd.con.createStatement();
+		bd.rs=bd.st.executeQuery(sql);
+		List<Book> list=new ArrayList<Book>();
+		while(bd.rs.next())
+		{
+			Book book = new Book(bd.rs.getString(1),bd.rs.getString(2),bd.rs.getString(3),bd.rs.getDouble(4),bd.rs.getLong(5));
+			list.add(book);
+		}
+		return list;
+	}
+	//按价格查询
+	public List<Book> Find(double little,double big) throws ClassNotFoundException, SQLException
+	{
+		double t;
+		t = Math.max(little, big);
+		little = Math.min(little, big);
+		big = t;
+		String sql = "SELECT *FROM  books where price>="+little+"&&price<="+big+"ORDER BY books.price ASC;";
+		bd.getConn();
+		bd.st = (Statement) bd.con.createStatement();
+		bd.rs=bd.st.executeQuery(sql);
+		List<Book> list=new ArrayList<Book>();
+		while(bd.rs.next())
+		{
+			Book book = new Book(bd.rs.getString(1),bd.rs.getString(2),bd.rs.getString(3),bd.rs.getDouble(4),bd.rs.getLong(5));
+			list.add(book);
+		}
+		return list;
+	}
+	//按名称+价格查询
+	public List<Book> Find(String name,double little,double big) throws ClassNotFoundException, SQLException
+	{
+		double t;
+		t = Math.max(little, big);
+		little = Math.min(little, big);
+		big = t;
+		String sql = "SELECT *FROM  books where name = '"+name+"'&&price>="+little+"&&price<="+big+" ORDER BY books.price ASC;";
+		bd.getConn();
+		bd.st = (Statement) bd.con.createStatement();
+		bd.rs=bd.st.executeQuery(sql);
+		List<Book> list=new ArrayList<Book>();
+		while(bd.rs.next())
+		{
+			Book book = new Book(bd.rs.getString(1),bd.rs.getString(2),bd.rs.getString(3),bd.rs.getDouble(4),bd.rs.getLong(5));
+			list.add(book);
+		}
+		return list;
+	}
+	//查找库存
+	public List<Book> Find1(long number) throws ClassNotFoundException, SQLException
+	{
+		String sql = "SELECT * FROM  books where num<="+number+";";
+		bd.getConn();
+		bd.st = (Statement) bd.con.createStatement();
+		bd.rs=bd.st.executeQuery(sql);
+		List<Book> list=new ArrayList<Book>();
+		while(bd.rs.next())
+		{
+		     Book book = new Book(bd.rs.getString(1),bd.rs.getString(2),bd.rs.getString(3),bd.rs.getDouble(4),bd.rs.getLong(5));
+			list.add(book);
+		}
+		return list;
+	}
+	//查找库存
+		public List<Book> Find2(long number) throws ClassNotFoundException, SQLException
+		{
+			String sql = "SELECT * FROM  books where num>="+number+";";
+			bd.getConn();
+			bd.st = (Statement) bd.con.createStatement();
+			bd.rs=bd.st.executeQuery(sql);
+			List<Book> list=new ArrayList<Book>();
+			while(bd.rs.next())
+			{
+			     Book book = new Book(bd.rs.getString(1),bd.rs.getString(2),bd.rs.getString(3),bd.rs.getDouble(4),bd.rs.getLong(5));
+				list.add(book);
+			}
+			return list;
+		}
 }
